@@ -2,6 +2,7 @@ package ziemapp.johnzieman.advancedrecyclerview.model
 
 import com.github.javafaker.Faker
 import java.util.*
+import kotlin.collections.ArrayList
 
 typealias UsersListener = (users: List<User>) -> Unit
 
@@ -28,6 +29,7 @@ class UserService {
     fun deleteUsers(user: User) {
         val deleteIndex = users.indexOfFirst { it.id == user.id }
         if (deleteIndex != -1) {
+            users = ArrayList(users)
             users.removeAt(deleteIndex)
             notifyChanges()
         }
@@ -38,6 +40,7 @@ class UserService {
         if (currentIndex == -1) return
         val newIndex = currentIndex + moveBy
         if (newIndex < 0 && newIndex >= users.size) return
+        users = ArrayList(users)
         Collections.swap(users, currentIndex, newIndex)
         notifyChanges()
     }

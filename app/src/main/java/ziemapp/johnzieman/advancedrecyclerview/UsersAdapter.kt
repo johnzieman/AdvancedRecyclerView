@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ziemapp.johnzieman.advancedrecyclerview.databinding.UserItemBinding
@@ -19,20 +20,44 @@ interface UserActionListener {
     fun onUserDetails(user: User)
 }
 
+
+class DiffUtilUserCallback(
+    private val oldList: List<User>,
+    private val newList: List<User>
+) : DiffUtil.Callback() {
+    override fun getOldListSize(): Int = oldList.size
+
+    override fun getNewListSize(): Int = newList.size
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldUser = oldList[oldItemPosition]
+        val newUser = newList[newItemPosition]
+        return oldUser.id == newUser.id
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldUser = oldList[oldItemPosition]
+        val newUser = newList[newItemPosition]
+        return oldUser == newUser
+    }
+}
+
 class UsersAdapter(private val userActionListener: UserActionListener) :
     RecyclerView.Adapter<UsersAdapter.UsersViewHolder>(), View.OnClickListener {
 
     var users: List<User> = emptyList()
         set(newValue) {
+            val diffCallback = DiffUtilUserCallback(field, newValue)
+            val diffResult = DiffUtil.calculateDiff(diffCallback)
             field = newValue
-            notifyDataSetChanged()
+            diffResult.dispatchUpdatesTo(this)
         }
 
     override fun getItemCount(): Int = users.size
 
     override fun onClick(v: View?) {
         val user = v?.tag as User
-        when(v.id){
+        when (v.id) {
             R.id.moreImageViewButton -> {
                 showPopupMenu(v)
             }
