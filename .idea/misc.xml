@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/John/AndroidStudioProjects/AdvancedRecyclerView/app/src/main/res/layout/activity_main.xml" value="0.335" />
+        <entry key="..\:/Users/John/AndroidStudioProjects/AdvancedRecyclerView/app/src/main/res/layout/fragment_user_details.xml" value="0.3229166666666667" />
+        <entry key="..\:/Users/John/AndroidStudioProjects/AdvancedRecyclerView/app/src/main/res/layout/fragment_users_list.xml" value="0.3229166666666667" />
         <entry key="..\:/Users/John/AndroidStudioProjects/AdvancedRecyclerView/app/src/main/res/layout/user_item.xml" value="0.3614583333333333" />
       </map>
     </option>

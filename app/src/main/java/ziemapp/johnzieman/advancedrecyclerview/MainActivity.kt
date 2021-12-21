@@ -20,24 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        adapter = UsersAdapter(object : UserActionListener {
-            override fun onUserMove(user: User, moveBy: Int) {
-                userService.moveUser(user, moveBy)
-            }
-
-            override fun onUserDelete(user: User) {
-                userService.deleteUsers(user)
-            }
-
-            override fun onUserDetails(user: User) {
-                Toast.makeText(this@MainActivity, user.name, Toast.LENGTH_SHORT).show()
-            }
-        })
-        val layoutManager = LinearLayoutManager(this)
-        binding.recycler.layoutManager = layoutManager
-        binding.recycler.adapter = adapter
-        userService.addListener(usersListener)
+        
     }
 
     override fun onDestroy() {
