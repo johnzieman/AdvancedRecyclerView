@@ -8,27 +8,21 @@ import ziemapp.johnzieman.advancedrecyclerview.databinding.ActivityMainBinding
 import ziemapp.johnzieman.advancedrecyclerview.model.User
 import ziemapp.johnzieman.advancedrecyclerview.model.UserService
 import ziemapp.johnzieman.advancedrecyclerview.model.UsersListener
+import ziemapp.johnzieman.advancedrecyclerview.screens.UsersListFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var adapter: UsersAdapter
-
-    private val userService: UserService
-        get() = (applicationContext as App).userService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        
+
+        savedInstanceState?.let {
+            supportFragmentManager.beginTransaction()
+                .add(R.id.fragmentContainer, UsersListFragment())
+                .commit()
+        }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        userService.removeListener { usersListener }
-    }
-
-    private val usersListener: UsersListener = {
-        adapter.users = it
-    }
 }
