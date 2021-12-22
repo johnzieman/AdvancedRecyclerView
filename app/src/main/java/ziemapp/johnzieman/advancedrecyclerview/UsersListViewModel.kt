@@ -13,6 +13,10 @@ class UsersListViewModel(
     private val _users = MutableLiveData<List<User>>()
     val users: LiveData<List<User>> = _users
 
+    private val listener: UsersListener = {
+        _users.value = it
+    }
+
     init {
         loadUsers()
     }
@@ -31,12 +35,10 @@ class UsersListViewModel(
     }
 
 
-    private val listener: UsersListener = {
-        _users.value = it
-    }
+
 
     override fun onCleared() {
         super.onCleared()
-
+        userService.removeListener(listener)
     }
 }
