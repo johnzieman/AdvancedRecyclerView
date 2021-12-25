@@ -8,9 +8,10 @@ import ziemapp.johnzieman.advancedrecyclerview.databinding.ActivityMainBinding
 import ziemapp.johnzieman.advancedrecyclerview.model.User
 import ziemapp.johnzieman.advancedrecyclerview.model.UserService
 import ziemapp.johnzieman.advancedrecyclerview.model.UsersListener
+import ziemapp.johnzieman.advancedrecyclerview.screens.UserDetailsFragment
 import ziemapp.johnzieman.advancedrecyclerview.screens.UsersListFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Navigator {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,4 +26,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun showDetails(user: User) {
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fragmentContainer, UserDetailsFragment())
+            .addToBackStack(null)
+            .commit()
+    }
+
+    override fun goBack() {
+        onBackPressed()
+    }
+
+    override fun toast(messageRes: String) {
+        Toast.makeText(this, messageRes, Toast.LENGTH_SHORT).show()
+    }
 }

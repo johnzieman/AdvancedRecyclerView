@@ -24,6 +24,14 @@ class UserService {
         }.toMutableList()
     }
 
+    fun getById(id: Long): UserDetails {
+        val user = users.firstOrNull { it.id == id } ?: throw Exception("No user found")
+        return UserDetails(
+            user = user,
+            value = Faker.instance().lorem().paragraphs(3).joinToString("\n")
+        )
+    }
+
     fun getUsers(): List<User> = users
 
     fun deleteUsers(user: User) {
