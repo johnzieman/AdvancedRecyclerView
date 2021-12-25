@@ -21,7 +21,6 @@ class UsersListViewModel(
         loadUsers()
     }
 
-
     fun loadUsers() {
         userService.addListener(listener)
     }

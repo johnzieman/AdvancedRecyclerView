@@ -1,6 +1,7 @@
 package ziemapp.johnzieman.advancedrecyclerview.screens
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,9 +16,16 @@ import ziemapp.johnzieman.advancedrecyclerview.databinding.FragmentUsersListBind
 import ziemapp.johnzieman.advancedrecyclerview.model.User
 
 class UsersListFragment : Fragment() {
+    private var navigator: Navigator? = null
     private lateinit var binding: FragmentUsersListBinding
     private lateinit var adapter: UsersAdapter
     private val viewModel: UsersListViewModel by viewModels() { factory() }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        navigator = context as Navigator
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,11 +42,12 @@ class UsersListFragment : Fragment() {
             }
 
             override fun onUserDetails(user: User) {
-
+                navigator?.showDetails(user)
             }
         })
 
         viewModel.users.observe(viewLifecycleOwner, Observer {
+            Log.d("list users", it.toString())
             adapter.users = it
         })
 
@@ -46,6 +55,11 @@ class UsersListFragment : Fragment() {
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = adapter
         return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        navigator = null
     }
 
 }

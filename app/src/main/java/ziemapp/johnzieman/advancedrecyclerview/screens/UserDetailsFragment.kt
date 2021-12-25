@@ -21,8 +21,13 @@ class UserDetailsFragment : Fragment() {
     private lateinit var binding: FragmentUserDetailsBinding
     private val userDetailsViewModel: UserDetailsViewModel by viewModels { factory() }
 
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        navigator = context as Navigator
         arguments?.let { userDetailsViewModel.loadUsers(it.getLong(ARG_USER_ID)) }
 
     }
